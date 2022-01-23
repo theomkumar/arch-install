@@ -1,2 +1,366 @@
 # arch-install
 My arch install (ext4,btrfs)(plasma)
+
+
+https://github.com/XxAcielxX/arch-plasma-install#update-mirrors-using-reflector
+
+PREP- mirrorlist/ssh 
+
+Mirrorlist /SSH
+pacman -Syy reflector openssh
+systemctl start sshd
+Passwd
+ip a
+TERMINAL : ssh root@192….
+Ssh Remove ssh cache :-
+   # ssh-keygen -R 192.168. 
+
+Update mirrorlist
+# reflector --country India,Singapore,Indonesia --age 12 --sort rate --save /etc/pacman.d/mirrorlist
+
+system clock update
+#timedatectl set-ntp true
+
+
+Partitioning/format/mount
+(EXT4)
+
+root@archiso ~ # lsblk
+NAME  MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0   7:0    0 715.4M  1 loop /run/archiso/airootfs
+sda     8:0    0    50G  0 disk
+sr0    11:0    1 864.3M  0 rom  /run/archiso/bootmnt
+
+root@archiso ~ # gdisk /dev/sda
+GPT fdisk (gdisk) version 1.0.8
+
+Partition table scan:
+  MBR: not present
+  BSD: not present
+  APM: not present
+  GPT: not present
+
+Creating new GPT entries in memory.
+
+Command (? for help): n
+Partition number (1-128, default 1):
+First sector (34-104857566, default = 2048) or {+-}size{KMGTP}:
+Last sector (2048-104857566, default = 104857566) or {+-}size{KMGTP}: +300M
+Current type is 8300 (Linux filesystem)
+Hex code or GUID (L to show codes, Enter = 8300): ef00
+Changed type of partition to 'EFI system partition'
+
+Command (? for help): n
+Partition number (2-128, default 2):
+First sector (34-104857566, default = 616448) or {+-}size{KMGTP}:
+Last sector (616448-104857566, default = 104857566) or {+-}size{KMGTP}: +4G
+Current type is 8300 (Linux filesystem)
+Hex code or GUID (L to show codes, Enter = 8300): 8200
+Changed type of partition to 'Linux swap'
+
+Command (? for help): n
+Partition number (3-128, default 3):
+First sector (34-104857566, default = 9005056) or {+-}size{KMGTP}:
+Last sector (9005056-104857566, default = 104857566) or {+-}size{KMGTP}: +30G
+Current type is 8300 (Linux filesystem)
+Hex code or GUID (L to show codes, Enter = 8300):
+Changed type of partition to 'Linux filesystem'
+
+Command (? for help): n
+Partition number (4-128, default 4):
+First sector (34-104857566, default = 71919616) or {+-}size{KMGTP}:
+Last sector (71919616-104857566, default = 104857566) or {+-}size{KMGTP}:
+Current type is 8300 (Linux filesystem)
+Hex code or GUID (L to show codes, Enter = 8300):
+Changed type of partition to 'Linux filesystem'
+
+Command (? for help): w
+
+Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
+PARTITIONS!!
+
+Do you want to proceed? (Y/N): Y
+OK; writing new GUID partition table (GPT) to /dev/sda.
+The operation has completed successfully.
+
+root@archiso ~ # lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0    7:0    0 715.4M  1 loop /run/archiso/airootfs
+sda      8:0    0    50G  0 disk
+├─sda1   8:1    0   300M  0 part
+├─sda2   8:2    0     4G  0 part
+├─sda3   8:3    0    30G  0 part
+└─sda4   8:4    0  15.7G  0 part
+sr0     11:0    1 864.3M  0 rom  /run/archiso/bootmnt
+root@archiso ~ # mkfs.fat -F32 /dev/sda1
+
+root@archiso ~ # mkswap /dev/sda2
+
+root@archiso ~ # mkfs.ext4 /dev/sda3
+
+
+root@archiso ~ # mkfs.ext4 /dev/sda4
+root@archiso ~ # mount /dev/sda3 /mnt
+root@archiso ~ # mkdir -p /mnt/{boot/efi,home}
+root@archiso ~ # mount /dev/sda1 /mnt/boot/efi
+root@archiso ~ # mount /dev/sda4 /mnt/home
+root@archiso ~ # swapon /dev/sda2
+
+root@archiso ~ # lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0    7:0    0 715.4M  1 loop /run/archiso/airootfs
+sda      8:0    0    50G  0 disk
+├─sda1   8:1    0   300M  0 part /mnt/boot/efi
+├─sda2   8:2    0     4G  0 part [SWAP]
+├─sda3   8:3    0    30G  0 part /mnt
+└─sda4   8:4    0  15.7G  0 part /mnt/home
+sr0     11:0    1 864.3M  0 rom  /run/archiso/bootmnt
+
+
+(BTRFS):-
+
+root@archiso ~ # lsblk
+NAME  MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0   7:0    0 715.4M  1 loop /run/archiso/airootfs
+sr0    11:0    1 864.3M  0 rom  /run/archiso/bootmnt
+vda   254:0    0    50G  0 disk  
+root@archiso ~ # gdisk /dev/vda
+GPT fdisk (gdisk) version 1.0.8
+
+Partition table scan:
+ MBR: not present
+ BSD: not present
+ APM: not present
+ GPT: not present
+
+Creating new GPT entries in memory.
+
+Command (? for help): n
+Partition number (1-128, default 1):  
+First sector (34-104857566, default = 2048) or {+-}size{KMGTP}:  
+Last sector (2048-104857566, default = 104857566) or {+-}size{KMG
+TP}: +300M
+Current type is 8300 (Linux filesystem)
+Hex code or GUID (L to show codes, Enter = 8300): ef00
+Changed type of partition to 'EFI system partition'
+
+Command (? for help): n
+Partition number (2-128, default 2):  
+First sector (34-104857566, default = 616448) or {+-}size{KMGTP}:
+ 
+Last sector (616448-104857566, default = 104857566) or {+-}size{K
+MGTP}:  
+Current type is 8300 (Linux filesystem)
+Hex code or GUID (L to show codes, Enter = 8300):  
+Changed type of partition to 'Linux filesystem'
+
+Command (? for help): w
+
+Final checks complete. About to write GPT data. THIS WILL OVERWRI
+TE EXISTING
+PARTITIONS!!
+
+Do you want to proceed? (Y/N): y
+OK; writing new GUID partition table (GPT) to /dev/vda.
+The operation has completed successfully.
+root@archiso ~ # lsblk              
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0    7:0    0 715.4M  1 loop /run/archiso/airootfs
+sr0     11:0    1 864.3M  0 rom  /run/archiso/bootmnt
+vda    254:0    0    50G  0 disk  
+├─vda1 254:1    0   300M  0 part  
+└─vda2 254:2    0  49.7G  0 part  
+root@archiso ~ # mkfs.vfat /dev/vda1
+mkfs.fat 4.2 (2021-01-31)
+root@archiso ~ # mkfs.btrfs /dev/vda2
+btrfs-progs v5.15.1  
+See http://btrfs.wiki.kernel.org for more information.
+
+Performing full device TRIM /dev/vda2 (49.71GiB) ...
+NOTE: several default settings have changed in version 5.15, plea
+se make sure
+     this does not affect your deployments:
+     - DUP for metadata (-m dup)
+     - enabled no-holes (-O no-holes)
+     - enabled free-space-tree (-R free-space-tree)
+
+Label:              (null)
+UUID:               92c52667-fb81-45dc-add2-ab203b02f6b8
+Node size:          16384
+Sector size:        4096
+Filesystem size:    49.71GiB
+Block group profiles:
+ Data:             single            8.00MiB
+ Metadata:         DUP             256.00MiB
+ System:           DUP               8.00MiB
+SSD detected:       no
+Zoned device:       no
+Incompat features:  extref, skinny-metadata, no-holes
+Runtime features:   free-space-tree
+Checksum:           crc32c
+Number of devices:  1
+Devices:
+  ID        SIZE  PATH
+   1    49.71GiB  /dev/vda2
+
+root@archiso ~ # mount /dev/vda2 /mnt
+
+root@archiso ~ # btrfs subvolume create /mnt/@
+Create subvolume '/mnt/@'
+root@archiso ~ # btrfs subvolume create /mnt/@home
+Create subvolume '/mnt/@home'
+root@archiso ~ # btrfs subvolume create /mnt/@var  
+Create subvolume '/mnt/@var'
+
+root@archiso ~ # umount /mnt
+
+root@archiso ~ # mount -o noatime,compress=zstd,ssd,discard=async
+,space_cache=v2,subvol=@ /dev/vda2 /mnt
+
+root@archiso ~ # mkdir -p /mnt/{boot/efi,home,var}
+
+root@archiso ~ # mount -o noatime,compress=zstd,ssd,discard=async
+,space_cache=v2,subvol=@home /dev/vda2 /mnt/home
+root@archiso ~ # mount -o noatime,compress=zstd,ssd,discard=async
+,space_cache=v2,subvol=@var /dev/vda2 /mnt/var   
+
+root@archiso ~ # mount /dev/vda1 /mnt/boot/efi
+
+root@archiso ~ # lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0    7:0    0 715.4M  1 loop /run/archiso/airootfs
+sr0     11:0    1 864.3M  0 rom  /run/archiso/bootmnt
+vda    254:0    0    50G  0 disk  
+├─vda1 254:1    0   300M  0 part /mnt/boot/efi
+└─vda2 254:2    0  49.7G  0 part /mnt/var
+                                /mnt/home
+                                /mnt
+
+
+Mirrorlist update 
+reflector --country India,Singapore,Indonesia --age 12 --sort rate --save /etc/pacman.d/mirrorlist
+
+ARCH BASE INSTALLATION/fstab gen
+
+# pacstrap /mnt base base-devel linux linux-firmware linux-headers amd-ucode nano vim reflector mtools dosfstools
+
+BTRFS
+# pacstrap /mnt base base-devel linux linux-firmware linux-headers amd-ucode git nano vim reflector mtools dosfstools btrfs-progs
+
+
+# genfstab -U /mnt >> /mnt/etc/fstab
+
+# arch-chroot /mnt
+[root@archiso /]#
+
+TIME AND LOCALE
+
+# ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
+
+# hwclock --systohc
+
+# nano /etc/locale.gen
+# locale-gen
+# echo LANG=en_US.UTF-8 >> /etc/locale.conf
+
+HOST
+#echo arch >> /etc/hostname
+Edit: 
+# nano /etc/hosts
+ # See hosts(5) for details.
+127.0.0.1       localhost
+::1                  localhost
+127.0.1.1       arch.localdomain        arch
+
+Root password
+# passwd
+
+Bootloader/sound/network/bluetooth packages
+# pacman -S grub efibootmgr networkmanager network-manager-applet dialog xdg-utils xdg-user-dirs pipewire os-prober alsa-utils bluez bluez-utils
+
+systemctl enable NetworkManager 
+systemctl enable fstrim.timer
+sudo systemctl enable bluetooth.service
+
+Bootloader 
+# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+# grub-mkconfig -o /boot/grub/grub.cfg
+
+Enable os prober
+# nano /etc/default/grub
+
+Uncomment or add this line at the end
+GRUB_DISABLE_OS_PROBER=false
+# grub-mkconfig -o /boot/grub/grub.cfg
+
+
+
+USER ADD 
+
+# useradd -m omi
+# passwd omi
+APPEND supplementary group for the user 
+# usermod -aG wheel omi
+# EDITOR=nano visudo
+Uncomment 
+%wheel All=(ALL) ALL
+
+(btrfs)
+# nano /etc/mkinitcpio.conf
+   Modules=(btrfs)
+# mkinitcpio -p linux
+
+[root@archiso /]# exit
+exit
+arch-chroot /mnt  
+root@archiso ~ # umount -R /mnt
+
+REBOOT
+
+BASIC INSTALLATION DONE
+
+POST-INSTALL SETUP:-
+
+Enable Multilib:-
+
+# nano /etc/pacman.conf 
+Uncomment the below two lines:-
+ 
+#[multilib] 
+#Include = /etc/pacman.d/mirrorlist MESA Libraries (32bit) 
+
+Xorg/graphics driver
+# sudo pacman -S xorg nvidia nvidia-utils
+
+KDE Plasma/Applications
+# sudo pacman -S plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
+
+sudo pacman -S sddm 
+sudo systemctl enable sddm
+
+
+YAY
+# git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+
+My Packages KVM/ZSH
+yay -S zsh-syntax-highlighting autojump zsh-autosuggestions brave-bin spotify pamac-all timeshift
+
+sudo pacman -S virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
+
+# sudo systemctl start libvirtd.service
+# sudo systemctl enable libvirtd.service
+# sudo virsh net-start default 
+# sudo virsh net-autostart default
+
+ZSH
+# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
+
+# chsh $USER
+  (/bin/zhc)
+
+
+
+
