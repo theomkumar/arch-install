@@ -258,9 +258,7 @@ FSTAB GENERATE
 ## TIME AND LOCALE
 ```
 # ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
-
 # hwclock --systohc
-
 # nano /etc/locale.gen
 # locale-gen
 # echo LANG=en_US.UTF-8 >> /etc/locale.conf
@@ -333,7 +331,7 @@ Uncomment the below two lines:-
 #Include = /etc/pacman.d/mirrorlist MESA Libraries (32bit) 
 ```
 
-## Xorg/graphics driver
+## Xorg/graphics driver (for amd gpu xf86-video-amdgpu)
 ```
 # sudo pacman -S xorg nvidia nvidia-utils
 ```
@@ -352,13 +350,14 @@ Uncomment the below two lines:-
 cd yay
 makepkg -si
 ```
-## My Packages KVM/ZSH/Brave/Spotify/Pamac/ZSH-Theme(Power level 10k)
+## My Packages KVM/ZSH/Brave/Spotify/Pamac/ZSH-Theme(Powerlevel10k)
 ```
 # yay -S zsh-syntax-highlighting autojump zsh-autosuggestions brave-bin spotify pamac-all timeshift
 # sudo pacman -S virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
 
 # sudo systemctl start libvirtd.service
 # sudo systemctl enable libvirtd.service
+# sudo systemctl enable sshd.service
 # sudo virsh net-start default 
 # sudo virsh net-autostart default
 
