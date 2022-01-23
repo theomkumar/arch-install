@@ -19,7 +19,7 @@ SSH Remove ssh cache :-
 # ssh-keygen -R 192.168....
 ```
 
-## Partitioning/format/mount (EXT4)
+## Partition/Format/Mount (EXT4)
 ```
 # lsblk
 NAME  MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
@@ -116,7 +116,7 @@ sda      8:0    0    50G  0 disk
 sr0     11:0    1 864.3M  0 rom  /run/archiso/bootmnt
 ```
 
-## Partitioning/format/mount(BTRFS):-
+## Partition/format/mount(BTRFS):-
 ```
 # lsblk
 NAME  MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
