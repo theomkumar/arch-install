@@ -329,7 +329,7 @@ Enable Multilib to run 32bit-app(optional):-
 
 # nano /etc/pacman.conf 
 Uncomment the below two lines:-
- #[multilib] 
+#[multilib] 
 #Include = /etc/pacman.d/mirrorlist MESA Libraries (32bit) 
 ```
 
@@ -342,8 +342,8 @@ Uncomment the below two lines:-
 ```
 # sudo pacman -S plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
 
-sudo pacman -S sddm 
-sudo systemctl enable sddm
+# sudo pacman -S sddm 
+# sudo systemctl enable sddm
 ```
 
 ## YAY
