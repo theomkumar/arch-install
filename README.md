@@ -1,30 +1,23 @@
-# arch-install
-My arch install (ext4,btrfs)(plasma)
-
-
-https://github.com/XxAcielxX/arch-plasma-install#update-mirrors-using-reflector
-
-PREP- mirrorlist/ssh 
-
-Mirrorlist /SSH
+## PREP- mirrorlist/ssh 
+```
 pacman -Syy reflector openssh
 systemctl start sshd
 Passwd
 ip a
-TERMINAL : ssh root@192….
+ssh root@192….
+
 Ssh Remove ssh cache :-
-   # ssh-keygen -R 192.168. 
+# ssh-keygen -R 192.168. 
 
 Update mirrorlist
 # reflector --country India,Singapore,Indonesia --age 12 --sort rate --save /etc/pacman.d/mirrorlist
 
 system clock update
 #timedatectl set-ntp true
+```
 
-
-Partitioning/format/mount
-(EXT4)
-
+## Partitioning/format/mount (EXT4)
+```
 root@archiso ~ # lsblk
 NAME  MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 loop0   7:0    0 715.4M  1 loop /run/archiso/airootfs
@@ -115,10 +108,10 @@ sda      8:0    0    50G  0 disk
 ├─sda3   8:3    0    30G  0 part /mnt
 └─sda4   8:4    0  15.7G  0 part /mnt/home
 sr0     11:0    1 864.3M  0 rom  /run/archiso/bootmnt
+```
 
-
-(BTRFS):-
-
+## Partitioning/format/mount(BTRFS):-
+```
 root@archiso ~ # lsblk
 NAME  MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 loop0   7:0    0 715.4M  1 loop /run/archiso/airootfs
@@ -235,26 +228,24 @@ vda    254:0    0    50G  0 disk
 └─vda2 254:2    0  49.7G  0 part /mnt/var
                                 /mnt/home
                                 /mnt
+```
 
-
-Mirrorlist update 
-reflector --country India,Singapore,Indonesia --age 12 --sort rate --save /etc/pacman.d/mirrorlist
-
-ARCH BASE INSTALLATION/fstab gen
-
+## ARCH BASE INSTALLATION/GENERATE FSTAB
+```
+EXT4
 # pacstrap /mnt base base-devel linux linux-firmware linux-headers amd-ucode nano vim reflector mtools dosfstools
 
 BTRFS
 # pacstrap /mnt base base-devel linux linux-firmware linux-headers amd-ucode git nano vim reflector mtools dosfstools btrfs-progs
 
-
+FSTAB GENERATE
 # genfstab -U /mnt >> /mnt/etc/fstab
 
 # arch-chroot /mnt
 [root@archiso /]#
-
-TIME AND LOCALE
-
+```
+## TIME AND LOCALE
+```
 # ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
 
 # hwclock --systohc
@@ -262,41 +253,43 @@ TIME AND LOCALE
 # nano /etc/locale.gen
 # locale-gen
 # echo LANG=en_US.UTF-8 >> /etc/locale.conf
-
-HOST
+```
+## HOST
+```
 #echo arch >> /etc/hostname
 Edit: 
 # nano /etc/hosts
  # See hosts(5) for details.
 127.0.0.1       localhost
-::1                  localhost
+::1             localhost
 127.0.1.1       arch.localdomain        arch
 
 Root password
 # passwd
+```
+## Bootloader/Sound/Network/Bluetooth/Printer
+```
+# pacman -S grub efibootmgr os-prober networkmanager network-manager-applet dialog xdg-utils xdg-user-dirs pipewire alsa-utils bluez bluez-utils cups
 
-Bootloader/sound/network/bluetooth packages
-# pacman -S grub efibootmgr networkmanager network-manager-applet dialog xdg-utils xdg-user-dirs pipewire os-prober alsa-utils bluez bluez-utils
-
-systemctl enable NetworkManager 
-systemctl enable fstrim.timer
-sudo systemctl enable bluetooth.service
+# systemctl enable NetworkManager 
+# systemctl enable fstrim.timer
+# systemctl enable bluetooth.service
+# systemctl enable --now cups.service
 
 Bootloader 
 # grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 # grub-mkconfig -o /boot/grub/grub.cfg
 
-Enable os prober
+Enable os-prober
 # nano /etc/default/grub
 
 Uncomment or add this line at the end
 GRUB_DISABLE_OS_PROBER=false
 # grub-mkconfig -o /boot/grub/grub.cfg
+```
 
-
-
-USER ADD 
-
+## USER ADD 
+```
 # useradd -m omi
 # passwd omi
 APPEND supplementary group for the user 
@@ -305,7 +298,7 @@ APPEND supplementary group for the user
 Uncomment 
 %wheel All=(ALL) ALL
 
-(btrfs)
+(only btrfs)(ext4 skip)
 # nano /etc/mkinitcpio.conf
    Modules=(btrfs)
 # mkinitcpio -p linux
@@ -318,9 +311,10 @@ root@archiso ~ # umount -R /mnt
 REBOOT
 
 BASIC INSTALLATION DONE
+``` 
 
-POST-INSTALL SETUP:-
-
+## POST-INSTALL SETUP:-
+```
 Enable Multilib:-
 
 # nano /etc/pacman.conf 
@@ -331,8 +325,10 @@ Uncomment the below two lines:-
 
 Xorg/graphics driver
 # sudo pacman -S xorg nvidia nvidia-utils
+```
 
-KDE Plasma/Applications
+## KDE Plasma/YAY/KVM/ZSH/Other-Packages
+```
 # sudo pacman -S plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
 
 sudo pacman -S sddm 
@@ -344,10 +340,9 @@ YAY
 cd yay
 makepkg -si
 
-My Packages KVM/ZSH
-yay -S zsh-syntax-highlighting autojump zsh-autosuggestions brave-bin spotify pamac-all timeshift
-
-sudo pacman -S virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
+My Packages KVM/ZSH/Brave/Spotify/Pamac etc
+# yay -S zsh-syntax-highlighting autojump zsh-autosuggestions brave-bin spotify pamac-all timeshift
+# sudo pacman -S virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
 
 # sudo systemctl start libvirtd.service
 # sudo systemctl enable libvirtd.service
@@ -360,7 +355,5 @@ echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 
 # chsh $USER
   (/bin/zhc)
-
-
-
-
+```
+## REBOOT :)
