@@ -1,30 +1,33 @@
-## PREP- mirrorlist/ssh 
+## PREP- mirrorlist/clock/SSH
 ```
-pacman -Syy reflector openssh
-systemctl start sshd
-Passwd
-ip a
-ssh root@192….
+System Clock Update
+# timedatectl set-ntp true
+# pacman -Syy reflector
 
-Ssh Remove ssh cache :-
-# ssh-keygen -R 192.168. 
-
-Update mirrorlist
+Update Mirrorlist
 # reflector --country India,Singapore,Indonesia --age 12 --sort rate --save /etc/pacman.d/mirrorlist
 
-system clock update
-#timedatectl set-ntp true
+SSH(optional)
+# pacman -Syy openssh
+# systemctl start sshd
+# Passwd
+# ip a
+# ssh root@192....
+
+if key change error, clear cache
+SSH Remove ssh cache :-
+# ssh-keygen -R 192.168....
 ```
 
 ## Partitioning/format/mount (EXT4)
 ```
-root@archiso ~ # lsblk
+# lsblk
 NAME  MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 loop0   7:0    0 715.4M  1 loop /run/archiso/airootfs
 sda     8:0    0    50G  0 disk
 sr0    11:0    1 864.3M  0 rom  /run/archiso/bootmnt
 
-root@archiso ~ # gdisk /dev/sda
+# gdisk /dev/sda
 GPT fdisk (gdisk) version 1.0.8
 
 Partition table scan:
@@ -76,7 +79,7 @@ Do you want to proceed? (Y/N): Y
 OK; writing new GUID partition table (GPT) to /dev/sda.
 The operation has completed successfully.
 
-root@archiso ~ # lsblk
+# lsblk
 NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 loop0    7:0    0 715.4M  1 loop /run/archiso/airootfs
 sda      8:0    0    50G  0 disk
@@ -85,21 +88,24 @@ sda      8:0    0    50G  0 disk
 ├─sda3   8:3    0    30G  0 part
 └─sda4   8:4    0  15.7G  0 part
 sr0     11:0    1 864.3M  0 rom  /run/archiso/bootmnt
-root@archiso ~ # mkfs.fat -F32 /dev/sda1
 
-root@archiso ~ # mkswap /dev/sda2
+Format
+# mkfs.fat -F32 /dev/sda1
 
-root@archiso ~ # mkfs.ext4 /dev/sda3
+# mkswap /dev/sda2
 
+# mkfs.ext4 /dev/sda3
 
-root@archiso ~ # mkfs.ext4 /dev/sda4
-root@archiso ~ # mount /dev/sda3 /mnt
-root@archiso ~ # mkdir -p /mnt/{boot/efi,home}
-root@archiso ~ # mount /dev/sda1 /mnt/boot/efi
-root@archiso ~ # mount /dev/sda4 /mnt/home
-root@archiso ~ # swapon /dev/sda2
+# mkfs.ext4 /dev/sda4
 
-root@archiso ~ # lsblk
+Mount
+# mount /dev/sda3 /mnt
+# mkdir -p /mnt/{boot/efi,home}
+# mount /dev/sda1 /mnt/boot/efi
+# mount /dev/sda4 /mnt/home
+# swapon /dev/sda2
+
+# lsblk
 NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 loop0    7:0    0 715.4M  1 loop /run/archiso/airootfs
 sda      8:0    0    50G  0 disk
@@ -112,7 +118,7 @@ sr0     11:0    1 864.3M  0 rom  /run/archiso/bootmnt
 
 ## Partitioning/format/mount(BTRFS):-
 ```
-root@archiso ~ # lsblk
+# lsblk
 NAME  MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 loop0   7:0    0 715.4M  1 loop /run/archiso/airootfs
 sr0    11:0    1 864.3M  0 rom  /run/archiso/bootmnt
@@ -156,17 +162,21 @@ PARTITIONS!!
 Do you want to proceed? (Y/N): y
 OK; writing new GUID partition table (GPT) to /dev/vda.
 The operation has completed successfully.
-root@archiso ~ # lsblk              
+
+# lsblk              
 NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 loop0    7:0    0 715.4M  1 loop /run/archiso/airootfs
 sr0     11:0    1 864.3M  0 rom  /run/archiso/bootmnt
 vda    254:0    0    50G  0 disk  
 ├─vda1 254:1    0   300M  0 part  
 └─vda2 254:2    0  49.7G  0 part  
-root@archiso ~ # mkfs.vfat /dev/vda1
-mkfs.fat 4.2 (2021-01-31)
-root@archiso ~ # mkfs.btrfs /dev/vda2
-btrfs-progs v5.15.1  
+
+Format
+
+# mkfs.vfat /dev/vda1
+# mkfs.fat 4.2 (2021-01-31)
+# mkfs.btrfs /dev/vda2
+  btrfs-progs v5.15.1  
 See http://btrfs.wiki.kernel.org for more information.
 
 Performing full device TRIM /dev/vda2 (49.71GiB) ...
@@ -195,31 +205,32 @@ Number of devices:  1
 Devices:
   ID        SIZE  PATH
    1    49.71GiB  /dev/vda2
+   
+Create & Mount subvolume
+# mount /dev/vda2 /mnt
 
-root@archiso ~ # mount /dev/vda2 /mnt
-
-root@archiso ~ # btrfs subvolume create /mnt/@
+# btrfs subvolume create /mnt/@
 Create subvolume '/mnt/@'
-root@archiso ~ # btrfs subvolume create /mnt/@home
+# btrfs subvolume create /mnt/@home
 Create subvolume '/mnt/@home'
-root@archiso ~ # btrfs subvolume create /mnt/@var  
+# btrfs subvolume create /mnt/@var  
 Create subvolume '/mnt/@var'
 
-root@archiso ~ # umount /mnt
+# umount /mnt
 
-root@archiso ~ # mount -o noatime,compress=zstd,ssd,discard=async
+# mount -o noatime,compress=zstd,ssd,discard=async
 ,space_cache=v2,subvol=@ /dev/vda2 /mnt
 
-root@archiso ~ # mkdir -p /mnt/{boot/efi,home,var}
+# mkdir -p /mnt/{boot/efi,home,var}
 
-root@archiso ~ # mount -o noatime,compress=zstd,ssd,discard=async
+# mount -o noatime,compress=zstd,ssd,discard=async
 ,space_cache=v2,subvol=@home /dev/vda2 /mnt/home
-root@archiso ~ # mount -o noatime,compress=zstd,ssd,discard=async
+# mount -o noatime,compress=zstd,ssd,discard=async
 ,space_cache=v2,subvol=@var /dev/vda2 /mnt/var   
 
-root@archiso ~ # mount /dev/vda1 /mnt/boot/efi
+# mount /dev/vda1 /mnt/boot/efi
 
-root@archiso ~ # lsblk
+# lsblk
 NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 loop0    7:0    0 715.4M  1 loop /run/archiso/airootfs
 sr0     11:0    1 864.3M  0 rom  /run/archiso/bootmnt
@@ -256,7 +267,7 @@ FSTAB GENERATE
 ```
 ## HOST
 ```
-#echo arch >> /etc/hostname
+# echo arch >> /etc/hostname
 Edit: 
 # nano /etc/hosts
  # See hosts(5) for details.
@@ -303,10 +314,9 @@ Uncomment
    Modules=(btrfs)
 # mkinitcpio -p linux
 
-[root@archiso /]# exit
-exit
-arch-chroot /mnt  
-root@archiso ~ # umount -R /mnt
+Exit arch-chroot unmount & Reboot
+# exit
+# umount -R /mnt
 
 REBOOT
 
@@ -315,32 +325,35 @@ BASIC INSTALLATION DONE
 
 ## POST-INSTALL SETUP:-
 ```
-Enable Multilib:-
+Enable Multilib to run 32bit-app(optional):-
 
 # nano /etc/pacman.conf 
 Uncomment the below two lines:-
- 
-#[multilib] 
+ #[multilib] 
 #Include = /etc/pacman.d/mirrorlist MESA Libraries (32bit) 
+```
 
-Xorg/graphics driver
+## Xorg/graphics driver
+```
 # sudo pacman -S xorg nvidia nvidia-utils
 ```
 
-## KDE Plasma/YAY/KVM/ZSH/Other-Packages
+## KDE Plasma
 ```
 # sudo pacman -S plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
 
 sudo pacman -S sddm 
 sudo systemctl enable sddm
+```
 
-
-YAY
+## YAY
+```
 # git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
-
-My Packages KVM/ZSH/Brave/Spotify/Pamac etc
+```
+## My Packages KVM/ZSH/Brave/Spotify/Pamac/ZSH-Theme(Power level 10k)
+```
 # yay -S zsh-syntax-highlighting autojump zsh-autosuggestions brave-bin spotify pamac-all timeshift
 # sudo pacman -S virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
 
@@ -349,7 +362,7 @@ My Packages KVM/ZSH/Brave/Spotify/Pamac etc
 # sudo virsh net-start default 
 # sudo virsh net-autostart default
 
-ZSH
+ZSH(optional)
 # git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 
