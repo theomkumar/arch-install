@@ -7,8 +7,8 @@ echo -ne "
 Installing
 "
 sudo pacman -S --noconfirm --needed xorg plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
-sudo pacman -Rf iptables --noconfirm
-sudo pacman -S --needed sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
+sudo pacman -Rd --nodeps iptables --noconfirm
+sudo pacman -S --noconfirm --needed sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
 
 sudo systemctl enable sddm
 sudo systemctl start libvirtd.service
