@@ -5,7 +5,9 @@ echo -ne "
 -------------------------------------------------------------------------
 
 Installing"
-sudo pacman -S --noconfirm xorg nvidia nvidia-utils plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5 sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
+
+sudo pacman -S --noconfirm --needed xorg nvidia nvidia-utils plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5 sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch -y 
+
 cd ~
 git clone "https://aur.archlinux.org/yay.git"
 cd ~/yay
