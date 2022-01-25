@@ -16,7 +16,11 @@ cd ~
 yay -S zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting timeshift --noconfirm 
 
 
-su
+if [ "`id -u`" -ne 0 ]
+then
+  echo -e "\n\nRun this script as root!\n\n"
+  exit -1
+fi
 yes | pacman -S sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
 systemctl enable sddm
 systemctl start libvirtd.service
