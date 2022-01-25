@@ -32,5 +32,6 @@ echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 
-yay -S brave-bin spotify pamac-all --needed --noconfirm
+yay -S brave-bin spotify --needed --noconfirm
+yay -S pamac-all
 exit
