@@ -366,7 +366,7 @@ ZSH(optional)
 Installation with few plugins
 # sudo pacman -S zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting
 
-git clone https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+# git clone https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 
 source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
