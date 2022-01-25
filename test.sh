@@ -7,6 +7,7 @@ echo -ne "
 Installing
 "
 sudo pacman -S --noconfirm --needed xorg plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
+
 sudo pacman -S --noconfirm --needed sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
 
 sudo systemctl enable sddm
@@ -21,6 +22,7 @@ cd ~/yay
 makepkg -si --noconfirm
 cd ~
 yay -S zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting timeshift --noconfirm --needed
+
 yay -S brave-bin spotify --noconfirm
 
 git clone https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
