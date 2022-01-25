@@ -8,7 +8,7 @@ echo -ne "
 -------------------------------------------------------------------------
     Installing Xorg,Plasma,nvidia,SDDM,YAY,ZSH-pk10,KVM
 -------------------------------------------------------------------------
-#to speed up testing removed nvidia nvidia-utils
+#to speed up testing removed nvidia nvidia-utils yay -S pamac-all
 Installing
 "
 sudo pacman -S --noconfirm --needed xorg plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
@@ -33,5 +33,4 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 
 yay -S brave-bin spotify --needed --noconfirm
-yay -S pamac-all
 exit
