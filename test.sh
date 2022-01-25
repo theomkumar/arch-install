@@ -1,4 +1,9 @@
 #!/bin/bash
+if [ "`id -u`" -ne 0 ]
+then
+  echo -e "\n\nRun this script as root!\n\n"
+  exit -1
+fi
 echo -ne "
 -------------------------------------------------------------------------
     Installing Xorg,Plasma,nvidia,SDDM,YAY,ZSH-pk10,KVM
@@ -15,12 +20,6 @@ makepkg -si --noconfirm
 cd ~
 yay -S zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting timeshift --noconfirm 
 
-
-if [ "`id -u`" -ne 0 ]
-then
-  echo -e "\n\nRun this script as root!\n\n"
-  exit -1
-fi
 yes | pacman -S sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
 systemctl enable sddm
 systemctl start libvirtd.service
@@ -33,5 +32,5 @@ echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 
-yay -S brave-bin spotify pamac-all
+yes | yay -S brave-bin spotify pamac-all
 exit
