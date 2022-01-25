@@ -352,7 +352,7 @@ makepkg -si
 ```
 ## My Packages KVM/ZSH/Brave/Spotify/Pamac/ZSH-Theme(Powerlevel10k)
 ```
-# yay -S zsh-syntax-highlighting autojump zsh-autosuggestions brave-bin spotify pamac-all timeshift
+# yay -S brave-bin spotify pamac-all timeshift
 # sudo pacman -S virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
 
 # sudo systemctl start libvirtd.service
@@ -362,10 +362,18 @@ makepkg -si
 # sudo virsh net-autostart default
 
 ZSH(optional)
-# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
+
+Installation with few plugins
+# sudo pacman -S zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting
+
+git clone https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 
+source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 
 # chsh $USER
-  (/bin/zhc)
+New shell :/bin/zsh
+In konsole settings>edit current profile>General>command:/bin/zsh
+Restart Konsole
 ```
 ## REBOOT :)
