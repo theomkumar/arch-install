@@ -7,10 +7,12 @@ echo -ne "
 Installing"
 sudo pacman -S xorg nvidia nvidia-utils plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5 sddm
 
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
-
+cd ~
+git clone "https://aur.archlinux.org/yay.git"
+cd ~/yay
+makepkg -si --noconfirm
+cd ~
+yay -S --noconfirm --needed -S zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting brave-bin spotify pamac-all timeshift
 yay -S zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting brave-bin spotify pamac-all timeshift --noconfirm
 
 sudo pacman -S virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
