@@ -8,8 +8,6 @@ Installing
 "
 sudo pacman -S --noconfirm xorg plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
 
-sudo pacman -S --noconfirm sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
-
 cd ~
 git clone "https://aur.archlinux.org/yay.git"
 cd ~/yay
@@ -18,12 +16,13 @@ cd ~
 yay -S zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting timeshift --noconfirm 
 
 
-
-sudo systemctl enable sddm
-sudo systemctl start libvirtd.service
-sudo systemctl enable libvirtd.service
-sudo virsh net-start default 
-sudo virsh net-autostart default
+su
+yes | pacman -S sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
+systemctl enable sddm
+systemctl start libvirtd.service
+systemctl enable libvirtd.service
+virsh net-start default 
+virsh net-autostart default
 
 git clone https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
