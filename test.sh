@@ -4,16 +4,18 @@ echo -ne "
     Installing Xorg,Plasma,nvidia,SDDM,YAY,ZSH-pk10,KVM
 -------------------------------------------------------------------------
 
-Installing"
-
-sudo pacman -S --noconfirm --needed xorg nvidia nvidia-utils plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5 sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch -y 
+Installing
+"
+sudo pacman -S --noconfirm xorg nvidia nvidia-utils plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
 
 cd ~
 git clone "https://aur.archlinux.org/yay.git"
 cd ~/yay
 makepkg -si --noconfirm
 cd ~
-yay -S zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting brave-bin spotify pamac-all timeshift -y --noconfirm  
+yay -S zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting brave-bin spotify pamac-all timeshift -y --noconfirm 
+
+sudo pacman -S sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch --noconfirm -y
 
 sudo systemctl enable sddm
 sudo systemctl start libvirtd.service
