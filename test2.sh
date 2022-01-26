@@ -21,8 +21,8 @@ git clone "https://aur.archlinux.org/yay.git"
 cd ~/yay
 makepkg -si --noconfirm
 cd ~
-yay -S zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting timeshift --noconfirm --needed
 yay -S snapd snapd-glib
+yay -Sdd zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting timeshift --noconfirm --needed
 yay -Sdd brave-bin spotify --noconfirm
 
 git clone https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
