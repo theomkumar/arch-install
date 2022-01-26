@@ -7,7 +7,7 @@ echo -ne "
 Installing
 "
 sudo pacman -Sy --noconfirm --needed xorg plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
-sudo pacman -Rdd iptables --noconfirm
+sudo pacman -Rdd --noconfirm iptables 
 sudo pacman -S --noconfirm --needed sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
 
 sudo systemctl enable sddm
@@ -31,4 +31,5 @@ echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 yay -S pamac-all --noconfirm
+sudo pacman -Syu --noconfirm
 exit
