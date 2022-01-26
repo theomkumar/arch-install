@@ -174,10 +174,8 @@ vda    254:0    0    50G  0 disk
 Format
 
 # mkfs.vfat /dev/vda1
-# mkfs.fat 4.2 (2021-01-31)
 # mkfs.btrfs /dev/vda2
-  btrfs-progs v5.15.1
-   
+     
 Create & Mount subvolume
 # mount /dev/vda2 /mnt
 
