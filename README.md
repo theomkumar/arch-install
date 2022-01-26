@@ -193,11 +193,8 @@ Create & Mount subvolume
 
 # mkdir -p /mnt/{boot/efi,home,var}
 
-# mount -o noatime,compress=zstd,ssd,discard=async
-,space_cache=v2,subvol=@home /dev/vda2 /mnt/home
-# mount -o noatime,compress=zstd,ssd,discard=async
-,space_cache=v2,subvol=@var /dev/vda2 /mnt/var   
-
+# mount -o noatime,compress=zstd,ssd,discard=async,space_cache=v2,subvol=@home /dev/vda2 /mnt/home
+# mount -o noatime,compress=zstd,ssd,discard=async,space_cache=v2,subvol=@var /dev/vda2 /mnt/var   
 # mount /dev/vda1 /mnt/boot/efi
 
 # lsblk
