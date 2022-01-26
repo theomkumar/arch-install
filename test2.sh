@@ -6,6 +6,7 @@ echo -ne "
 #to speed up testing removed nvidia nvidia-utils 
 Installing
 "
+reflector --country India,Singapore,Indonesia --age 12 --sort rate --save /etc/pacman.d/mirrorlist
 sudo pacman -Sy --noconfirm --needed xorg plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
 sudo pacman -Rdd --noconfirm iptables 
 sudo pacman -S --noconfirm --needed sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
@@ -31,5 +32,7 @@ echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 yay -S pamac-all --noconfirm
+yay -Yc --noconfirm
+sudo pacman -Sc --noconfirm
 sudo pacman -Syu --noconfirm
 exit
