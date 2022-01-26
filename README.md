@@ -182,11 +182,11 @@ Create & Mount subvolume
 # mount /dev/vda2 /mnt
 
 # btrfs subvolume create /mnt/@
-Create subvolume '/mnt/@'
+
 # btrfs subvolume create /mnt/@home
-Create subvolume '/mnt/@home'
+
 # btrfs subvolume create /mnt/@var  
-Create subvolume '/mnt/@var'
+
 
 # umount /mnt
 
