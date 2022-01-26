@@ -6,6 +6,9 @@ echo -ne "
 #to speed up testing removed nvidia nvidia-utils 
 Installing
 "
+pacman -Sy reflector --noconfirm
+sudo systemctl enable reflector.timer
+sudo systemctl start reflector.timer
 reflector --country India,Singapore,Indonesia --age 12 --sort rate --save /etc/pacman.d/mirrorlist
 sudo pacman -Sy --noconfirm --needed xorg plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
 sudo pacman -Rdd --noconfirm iptables 
