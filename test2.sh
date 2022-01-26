@@ -3,7 +3,7 @@ echo -ne "
 -------------------------------------------------------------------------
     Installing GRUB,Xorg,Plasma,nvidia,SDDM,YAY,ZSH-pk10,KVM
 -------------------------------------------------------------------------
-#to speed up testing removed nvidia nvidia-utils 
+ 
 Installing
 "
 #TIME AND LOCALE
@@ -51,7 +51,7 @@ sudo pacman -Sy --noconfirm
 echo 'GRUB_DISABLE_OS_PROBER=false' >> /etc/default/grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-sudo pacman -Sy --noconfirm --needed xorg plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
+sudo pacman -Sy --noconfirm --needed xorg nvidia nvidia-utils plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
 sudo pacman -Rdd --noconfirm iptables 
 sudo pacman -S --noconfirm --needed sddm virt-manager qemu ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat qemu-arch-extra git openssh qbittorrent wget neofetch
 
