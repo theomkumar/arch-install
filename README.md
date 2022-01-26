@@ -176,35 +176,7 @@ Format
 # mkfs.vfat /dev/vda1
 # mkfs.fat 4.2 (2021-01-31)
 # mkfs.btrfs /dev/vda2
-  btrfs-progs v5.15.1  
-See http://btrfs.wiki.kernel.org for more information.
-
-Performing full device TRIM /dev/vda2 (49.71GiB) ...
-NOTE: several default settings have changed in version 5.15, plea
-se make sure
-     this does not affect your deployments:
-     - DUP for metadata (-m dup)
-     - enabled no-holes (-O no-holes)
-     - enabled free-space-tree (-R free-space-tree)
-
-Label:              (null)
-UUID:               92c52667-fb81-45dc-add2-ab203b02f6b8
-Node size:          16384
-Sector size:        4096
-Filesystem size:    49.71GiB
-Block group profiles:
- Data:             single            8.00MiB
- Metadata:         DUP             256.00MiB
- System:           DUP               8.00MiB
-SSD detected:       no
-Zoned device:       no
-Incompat features:  extref, skinny-metadata, no-holes
-Runtime features:   free-space-tree
-Checksum:           crc32c
-Number of devices:  1
-Devices:
-  ID        SIZE  PATH
-   1    49.71GiB  /dev/vda2
+  btrfs-progs v5.15.1
    
 Create & Mount subvolume
 # mount /dev/vda2 /mnt
