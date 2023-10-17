@@ -346,4 +346,50 @@ New shell :/bin/zsh
 In konsole settings>edit current profile>General>command:/bin/zsh
 Restart Konsole
 ```
+
+CURRENT SETUP:
+```
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+sda           8:0    0 931.5G  0 disk 
+├─sda1        8:1    0 813.3G  0 part 
+└─sda2        8:2    0 118.2G  0 part 
+sdb           8:16   1 114.6G  0 disk 
+├─sdb1        8:17   1 114.6G  0 part 
+└─sdb2        8:18   1    32M  0 part 
+zram0       254:0    0     4G  0 disk [SWAP]
+nvme1n1     259:0    0 238.5G  0 disk 
+├─nvme1n1p1 259:1    0   511M  0 part /boot
+└─nvme1n1p2 259:2    0   238G  0 part /var/lib/docker/btrfs
+                                      /var/log
+                                      /var/cache/pacman/pkg
+                                      /home
+                                      /.snapshots
+                                      /
+nvme0n1     259:3    0 931.5G  0 disk 
+├─nvme0n1p1 259:4    0   100M  0 part 
+├─nvme0n1p2 259:5    0    16M  0 part 
+├─nvme0n1p3 259:6    0   120G  0 part 
+├─nvme0n1p4 259:7    0 810.8G  0 part 
+└─nvme0n1p5 259:8    0   604M  0 part 
+
+```
+## Fix Common Startup Issues
+```
+BOOT INTO ARCH LIVE MEDIA
+# setfont -d
+
+# sudo mount /dev/nvme0n1p2 /mnt -o subvol=@
+
+# sudo mount /dev/nvme0n1p1 /mnt/boot
+
+# genfstab -U /mnt >> /mnt/etc/fstab
+
+# arch-chroot /mnt
+
+# sudo pacman -S base base-devel linux linux-firmware linux-headers amd-ucode mtools dosfstools btrfs-progs
+
+# sudo mkinitcpio -P linux
+
+# exit 
+```
 ## REBOOT :)
