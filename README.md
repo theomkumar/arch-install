@@ -393,3 +393,35 @@ BOOT INTO ARCH LIVE MEDIA
 # exit 
 ```
 ## REBOOT :)
+
+--------------
+
+## Fix Wifi turning off automatically
+
+```
+❯ ip link show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: enp2s0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN mode DEFAULT group default qlen 1000
+    link/ether 3c:7c:3f:1b:6e:d3 brd ff:ff:ff:ff:ff:ff
+    altname enx3c7c3f1b6ed3
+3: enp6s0f3u1u1c2: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN mode DEFAULT group default qlen 1000
+    link/ether a0:ce:c8:66:df:46 brd ff:ff:ff:ff:ff:ff
+    altname enxa0cec866df46
+6: wlp3s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DORMANT group default qlen 1000
+    link/ether 80:30:49:e4:f0:35 brd ff:ff:ff:ff:ff:ff
+    altname wlx803049e4f035
+
+❯ sudo iw dev wlp3s0 set power_save off
+
+❯ echo 'options rtw88_pci disable_aspm=1' | sudo tee /etc/modprobe.d/rtw88_pci.conf
+
+options rtw88_pci disable_aspm=1
+
+❯ sudo modprobe -r rtw88_8822ce && sudo modprobe rtw88_8822ce
+
+❯ echo 'options rtw88_core disable_lps_deep=Y' | sudo tee -a /etc/modprobe.d/rtw88_core.conf
+
+options rtw88_core disable_lps_deep=Y
+
+```
