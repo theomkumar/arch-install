@@ -429,7 +429,7 @@ Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkMa
 ❯ echo -e "[connection]\nwifi.powersave = 2" | sudo tee /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf > /dev/null
 
 ```
-## IF THE ISSUE WIFI STILL PERSISTS::
+## IF THE WIFI ISSUE STILL PERSISTS::
 ```
 
 
