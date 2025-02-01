@@ -390,11 +390,23 @@ BOOT INTO ARCH LIVE MEDIA
 
 # sudo mkinitcpio -P linux
 
-# exit 
+# exit
 ```
 ## REBOOT :)
 
 --------------
+
+
+## FSTAB ISSUE / Cloning into new drive
+```
+# IF size mismatch
+
+> btrfs rescue fix-device-size /dev/sdb2
+
+> mount -o subvol=@ /dev/sdb2 /mnt
+> mount -a
+> genfstab -U /mnt > /mnt/etc/fstab
+```
 
 ## Fix Wifi turning off automatically
 
@@ -427,6 +439,8 @@ Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkMa
 
 
 ❯ echo -e "[connection]\nwifi.powersave = 2" | sudo tee /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf > /dev/null
+
+
 
 ```
 ## IF THE WIFI ISSUE STILL PERSISTS::
